@@ -22,13 +22,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
+
+
 @Entity
 public class Family {
   @Id
@@ -38,6 +34,8 @@ public class Family {
 
   @OneToMany(mappedBy = "family")
   private final List<Person> members = new ArrayList<>();
+  
+  // getters and setters
 
 }
 ```
@@ -50,20 +48,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 public class Job {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private double salary;
   private String jobDescr;
+
+    // getters and setters
+
 
 }
 ```
@@ -80,13 +76,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
+
+
 @Entity
 public class Person {
   @Id
@@ -103,6 +95,9 @@ public class Person {
 
   @OneToMany
   private List<Job> jobList = new ArrayList<>();
+
+    // getters and setters
+
 }
 ```
 The file `persistence.xml` in `src/main/resources/META-INF` is configured to automatically map them to database tables using **[Hibernate](https://hibernate.org/orm/)**. Have a look at the `persistence.xml` and try to roughly understand its content.

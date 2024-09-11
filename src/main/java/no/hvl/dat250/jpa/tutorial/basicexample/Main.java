@@ -12,8 +12,9 @@ public class Main {
 
   public static void main(String[] args) {
 
-    try (EntityManagerFactory factory = Persistence.createEntityManagerFactory("jpa-tutorial");
-        EntityManager em = factory.createEntityManager()) {
+    try (
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("jpa-tutorial");
+            EntityManager em = factory.createEntityManager()) {
 
       readAndPrintTodos(em);
 
@@ -29,6 +30,7 @@ public class Main {
     }
   }
 
+  @SuppressWarnings("unchecked")
   private static void readAndPrintTodos(EntityManager em) {
     Query q = em.createQuery("select t from Todo t");
     List<Todo> todoList = q.getResultList();

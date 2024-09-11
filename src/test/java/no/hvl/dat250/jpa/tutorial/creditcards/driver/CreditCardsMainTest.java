@@ -1,24 +1,25 @@
 package no.hvl.dat250.jpa.tutorial.creditcards.driver;
 
 import no.hvl.dat250.jpa.tutorial.creditcards.*;
-import org.junit.Before;
-import org.junit.Test;
+
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class CreditCardsMainTest {
 
     private EntityManagerFactory factory;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         factory = Persistence.createEntityManagerFactory(CreditCardsMain.PERSISTENCE_UNIT_NAME);
     }
@@ -34,41 +35,41 @@ public class CreditCardsMainTest {
         Customer customer = em.find(Customer.class, 1L);
 
         // Test person data
-        assertThat(customer.getName(), is("Max Mustermann"));
+        assertEquals(customer.getName(), "Max Mustermann");
 
         // Test address
-        assertThat(customer.getAddresses().size(), is(1));
+        assertEquals(customer.getAddresses().size(), 1);
         Address address = customer.getAddresses().iterator().next();
 
-        assertThat(address.getStreet(), is("Inndalsveien"));
-        assertThat(address.getNumber(), is(28));
-        assertThat(address.getOwners(), is(Set.of(customer)));
+        assertEquals(address.getStreet(), "Inndalsveien");
+        assertEquals(address.getNumber(), 28);
+        assertEquals(address.getOwners(), Set.of(customer));
 
         // Test credit cards
-        assertThat(customer.getCreditCards().size(), is(2));
+        assertEquals(customer.getCreditCards().size(), 2);
         CreditCard firstCard = getCardWithNumber(customer, 12345);
         CreditCard secondCard = getCardWithNumber(customer, 123);
 
-        assertThat(firstCard.getNumber(), is(12345));
-        assertThat(firstCard.getBalance(), is(-5000));
-        assertThat(firstCard.getCreditLimit(), is(-10000));
+        assertEquals(firstCard.getNumber(), 12345);
+        assertEquals(firstCard.getBalance(), -5000);
+        assertEquals(firstCard.getCreditLimit(), -10000);
 
-        assertThat(secondCard.getNumber(), is(123));
-        assertThat(secondCard.getBalance(), is(1));
-        assertThat(secondCard.getCreditLimit(), is(2000));
+        assertEquals(secondCard.getNumber(), 123);
+        assertEquals(secondCard.getBalance(), 1);
+        assertEquals(secondCard.getCreditLimit(), 2000);
 
         // Test pincode
         Pincode firstCardPincode = firstCard.getPincode();
 
-        assertThat(firstCardPincode.getId(), is(secondCard.getPincode().getId())); // Pincode objects of the two cards are identical!
-        assertThat(firstCardPincode.getCode(), is("123"));
-        assertThat(firstCardPincode.getCount(), is(1));
+        assertEquals(firstCardPincode.getId(), secondCard.getPincode().getId()); // Pincode objects of the two cards are identical!
+        assertEquals(firstCardPincode.getCode(), "123");
+        assertEquals(firstCardPincode.getCount(), 1);
 
         // Test bank
         Bank bank = firstCard.getOwningBank();
-        assertThat(bank.getId(), is(secondCard.getOwningBank().getId())); // Bank objects of the two cards are identical!
-        assertThat(bank.getName(), is("Pengebank"));
-        assertThat(bank.getOwnedCards(), is(Set.of(firstCard, secondCard)));
+        assertEquals(bank.getId(),secondCard.getOwningBank().getId()); // Bank objects of the two cards are identical!
+        assertEquals(bank.getName(), "Pengebank");
+        assertEquals(bank.getOwnedCards(), Set.of(firstCard, secondCard));
     }
 
     private CreditCard getCardWithNumber(Customer customer, int cardNumber) {
