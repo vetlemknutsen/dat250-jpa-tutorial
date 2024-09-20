@@ -1,25 +1,32 @@
 package no.hvl.dat250.jpa.tutorial.creditcards;
 
 import jakarta.persistence.*;
-import java.util.Collection;
+
+import java.util.*;
 
 @Entity
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+
+    @OneToMany
+    private Set<CreditCard> creditCardList = new HashSet<>();
 
     public Long getId() {
         return id;
     }
 
     public String getName() {
-        // TODO: implement method!
-        return null;
+        return name;
     }
 
     public Collection<CreditCard> getOwnedCards() {
-        // TODO: implement method!
-        return null;
+        return creditCardList;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 }
