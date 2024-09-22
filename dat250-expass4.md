@@ -35,7 +35,7 @@ CREATE TABLE Customer (
 );
 ```
 
-
+  
 **Find a way to inspect the database tables being created and create a database schema in your report. Do the created tables correspond to your initial thoughts regarding the exercise?**
 <br>
 This is actually quite easy to do, as IntelliJ has a built in SQL plugin, where you can see the database like this: 
